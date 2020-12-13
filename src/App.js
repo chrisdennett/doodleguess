@@ -3,6 +3,7 @@ import styled from "styled-components";
 import * as ml5 from "ml5";
 import { DrawingCanvas } from "./components/DrawingCanvas";
 import { Guesses } from "./components/Guesses";
+import { Tips } from "./components/Tips";
 // import { TestCanvas } from "./TestCanvas";
 
 export default function App() {
@@ -17,6 +18,8 @@ export default function App() {
         ml5.imageClassifier("DoodleNet", () => setModelReady(true))
       );
     }
+
+    // eslint-disable-next-line
   }, [doodleClassifier]);
 
   useEffect(() => {
@@ -24,6 +27,7 @@ export default function App() {
     if (!srcCanvas || !srcCanvas.canvas) return;
 
     doodleClassifier.classify(srcCanvas.canvas, gotResults);
+    // eslint-disable-next-line
   }, [srcCanvas]);
 
   const gotResults = (error, results) => {
@@ -47,6 +51,7 @@ export default function App() {
         <DrawingCanvas onUpdateCanvas={onDrawCanvas} />
         <Guesses guessList={results} />
       </CanvasHolder>
+      <Tips />
       {/* <TestCanvas sourceCanvas={srcCanvas} /> */}
     </Page>
   );
@@ -54,11 +59,13 @@ export default function App() {
 
 const Page = styled.div`
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
 `;
 
 const CanvasHolder = styled.div`
   width: 100%;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
